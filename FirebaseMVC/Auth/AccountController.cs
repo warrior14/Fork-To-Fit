@@ -27,7 +27,7 @@ namespace ForkToFit.Auth
             //returns empty room
             return View();
         }
-
+        // method names determines what gets called
         [HttpPost]
         public async Task<IActionResult> Login(Credentials credentials)
         {
@@ -88,6 +88,7 @@ namespace ForkToFit.Auth
             return RedirectToAction("Index", "Home");
         }
 
+        // user gets logged out
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
@@ -104,7 +105,7 @@ namespace ForkToFit.Auth
 
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
+            // where they log in to the app
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
