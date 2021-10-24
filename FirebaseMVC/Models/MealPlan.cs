@@ -13,8 +13,6 @@ namespace ForkToFitModels
 
         public int UserProfileId { get; set; }
 
-        public int FoodId { get; set; }
-
         public int MealPlanTypeId { get; set; }
 
         public int CalorieTracker { get; set; }
