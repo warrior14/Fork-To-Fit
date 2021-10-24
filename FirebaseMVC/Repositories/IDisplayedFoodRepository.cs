@@ -8,7 +8,7 @@ namespace ForkToFit.Repositories
 {
     public interface IDisplayedFoodRepository
     {
-        List<MealPlan> GetAllMealPlans();
-        MealPlan GetMealPlanById(int id);
+        List<DisplayedFood> GetAllDisplayedFoods();
+        DisplayedFood GetDisplayedFoodById(int id);
     }
 }
