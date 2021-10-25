@@ -8,52 +8,57 @@ using ForkToFit.Models;
 
 namespace ForkToFit.Repositories
 {
-    public class DisplayedFoodRepository : IDisplayedFoodRepository
+    public class DisplayedFoodRepository : BaseRepository, IDisplayedFoodRepository 
     {
-        private readonly IConfiguration _config;
+        public DisplayedFoodRepository(IConfiguration config) : base(config) { }
 
-        // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework
-        // and is useful for retrieving things out of the appsettings.json file like connection strings.
-        public DisplayedFoodRepository(IConfiguration config)
-        {
-            _config = config;
-        }
-
-
+        // this method gets a list of all the displayedfoods
         public List<DisplayedFood> GetAllDisplayedFoods()
         {
+            //making the sql connectioin
             using (SqlConnection conn = Connection)
             {
+                //opening the command
                 conn.Open();
+                //creating the command
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    // line below must match all the columns in your database
                     cmd.CommandText = @"
-                        SELECT Id, [Name], , NeighborhoodId
-                        FROM Walker
+                        SELECT Id, Name, ServingSize, Calories, Description, MacroCategoryId, ImageUrl
+                        FROM DisplayedFood
                     ";
-
+                    // read all the values and initializing the reader
                     SqlDataReader reader = cmd.ExecuteReader();
-
-                    List<DisplayedFood> walkers = new List<DisplayedFood>();
+                    // creating a variable to hold the list of displayed foods
+                    List<DisplayedFood> displayedFoods = new List<DisplayedFood>();
+                    // using a while is necessary so that it gets everything in the list
                     while (reader.Read())
                     {
-                        Walker walker = new Walker
+                        // creating a new instance of displayedfood
+                        DisplayedFood displayedFood = new DisplayedFood
                         {
+                            // storing the values returned from the reader to the corresponding properties/columns
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
-                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            ServingSize = reader.GetInt32(reader.GetOrdinal("ServingSize")),
+                            Calories = reader.GetInt32(reader.GetOrdinal("Calories")),
+                            Description = reader.GetString(reader.GetOrdinal("Description")),
+                            MacroCategoryId = reader.GetInt32(reader.GetOrdinal("MacroCategoryId")),
+                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                         };
 
-                        walkers.Add(walker);
+                        displayedFoods.Add(displayedFood);
                     }
 
                     reader.Close();
 
-                    return walkers;
+                    return displayedFoods;
                 }
             }
         }
+
+
 
 
 

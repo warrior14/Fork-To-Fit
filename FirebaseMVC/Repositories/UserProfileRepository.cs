@@ -34,7 +34,7 @@ namespace ForkToFit.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                    SELECT Id, Email, FirebaseUserId
+                                    SELECT Id, Name, Email, FirebaseUserId, DateCreated, BmrInfo
                                     FROM UserProfile
                                     WHERE Id = @Id";
 
@@ -48,8 +48,11 @@ namespace ForkToFit.Repositories
                         userProfile = new UserProfile
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             FirebaseUserId = reader.GetString(reader.GetOrdinal("FirebaseUserId")),
+                            DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated")),
+                            BmrInfo = reader.GetInt32(reader.GetOrdinal("BmrInfo"))
                         };
                     }
                     reader.Close();
@@ -67,7 +70,7 @@ namespace ForkToFit.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                    SELECT Id, Email, FirebaseUserId
+                                    SELECT Id, Name, Email, FirebaseUserId, DateCreated, BmrInfo
                                     FROM UserProfile
                                     WHERE FirebaseUserId = @FirebaseuserId";
 
@@ -81,8 +84,11 @@ namespace ForkToFit.Repositories
                         userProfile = new UserProfile
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             FirebaseUserId = reader.GetString(reader.GetOrdinal("FirebaseUserId")),
+                            DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated")),
+                            BmrInfo = reader.GetInt32(reader.GetOrdinal("BmrInfo"))
                         };
                     }
                     reader.Close();
@@ -101,12 +107,15 @@ namespace ForkToFit.Repositories
                 {
                     cmd.CommandText = @"
                                         INSERT INTO
-                                        UserProfile (Email, FirebaseUserId) 
+                                        UserProfile (Email, FirebaseUserId, Name, DateCreated, BmrInfo) 
                                         OUTPUT INSERTED.ID
-                                        VALUES(@email, @firebaseUserId)";
+                                        VALUES(@email, @firebaseUserId, @name, @dateCreated, @bmrInfo)";
 
                     cmd.Parameters.AddWithValue("@email", userProfile.Email);
                     cmd.Parameters.AddWithValue("@firebaseUserId", userProfile.FirebaseUserId);
+                    cmd.Parameters.AddWithValue("@name", userProfile.Name);
+                    cmd.Parameters.AddWithValue("@dateCreated", userProfile.DateCreated);
+                    cmd.Parameters.AddWithValue("@bmrInfo", userProfile.BmrInfo);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
                 }

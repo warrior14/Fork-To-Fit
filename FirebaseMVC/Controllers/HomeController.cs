@@ -4,6 +4,7 @@ using ForkToFit.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using ForkToFit.Repositories;
+using System;
 
 namespace ForkToFit.Controllers
 {
@@ -21,6 +22,7 @@ namespace ForkToFit.Controllers
         {
             var userProfileId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var userProfile = _userProfileRepository.GetById(userProfileId);
+            //userProfile.DateCreated = DateTime.Now;
             return View(userProfile);
         }
 
