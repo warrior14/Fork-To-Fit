@@ -8,6 +8,7 @@ using ForkToFit.Auth.Models;
 using ForkToFit.Repositories;
 using ForkToFit.Models;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace ForkToFit.Auth
 {
@@ -68,6 +69,7 @@ namespace ForkToFit.Auth
                 return View(registration);
             }
 
+            // This is waiting for the register method in FirebaseAuthService.cs to complete registration
             var fbUser = await _firebaseAuthService.Register(registration);
 
             if (fbUser == null)
@@ -80,6 +82,8 @@ namespace ForkToFit.Auth
             {
                 Email = fbUser.Email,
                 FirebaseUserId = fbUser.FirebaseUserId,
+                Name = registration.Name,
+                DateCreated = DateTime.Now
             };
             _userProfileRepository.Add(newUserProfile);
 
