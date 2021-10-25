@@ -19,7 +19,7 @@ namespace ForkToFit.Models
 
         public string Description { get; set; }
 
-        [DisplayName("Macro Catergory")]
+        [DisplayName("Macronutrient Catergory")]
         public int MacroCategoryId { get; set; }
 
         [DisplayName("Image")]
