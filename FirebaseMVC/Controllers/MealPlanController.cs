@@ -140,22 +140,24 @@ namespace ForkToFit.Controllers
     public ActionResult Delete(int id)
     {
 
-        MealPlan mealPlan = _mealPlanRepo
-        return View();
+        MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
+        return View(mealPlan);
     }
 
     // POST: MealPlanController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
+    public ActionResult Delete(int id, MealPlan mealPlan)
     {
         try
         {
+                mealPlan = _mealPlanRepo.GetMealPlanById(id);
+                _mealPlanRepo.DeleteMealPlan(id);
             return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View();
+            return View(mealPlan);
         }
     }
 
