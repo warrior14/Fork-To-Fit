@@ -1,10 +1,14 @@
-﻿using ForkToFit.Repositories;
+﻿using ForkToFit.Models;
+using ForkToFit.Models.ViewModels;
+using ForkToFit.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+
 
 namespace ForkToFit.Controllers
 {
@@ -12,16 +16,22 @@ namespace ForkToFit.Controllers
 {
 
 
-
+        private readonly IMealPlanTypeRepository _mealPlanTypeRepo;
         private readonly IMealPlanRepository _mealPlanRepo;
+        private readonly IUserProfileRepository _userProfileRepo;
 
         // ASP.NET will give us an instance of our DisplayedFood Repository. This is called "Dependency Injection" 
 
 
         // this is a constructor that takes in a parameter of IDisplayedFoodRepository and the displayedFoodRepository is the variable that holds it.
-        public MealPlanController(IMealPlanRepository mealPlanRepository)
+        public MealPlanController(
+            IMealPlanRepository mealPlanRepository, 
+            IMealPlanTypeRepository mealPlanTypeRepository,
+            IUserProfileRepository userProfileRepository)
         {
             _mealPlanRepo = mealPlanRepository;
+            _mealPlanTypeRepo = mealPlanTypeRepository;
+            _userProfileRepo = userProfileRepository;
         }
 
 
@@ -30,7 +40,6 @@ namespace ForkToFit.Controllers
         // GET: MealPlanController
         public ActionResult Index()
     {
-
             List<MealPlan> mealPlans = _mealPlanRepo.GetAllMealPlans();
 
         return View(mealPlans);
@@ -47,26 +56,67 @@ namespace ForkToFit.Controllers
     // GET: MealPlanController/Create
     public ActionResult Create()
     {
-        return View();
+
+            // storing the list of meal plan types returned from calling the getallmealplantype method from meal plan type repo
+            //List<MealPlanType> mealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
+
+            //MealPlanFormViewModel vm = new MealPlanFormViewModel()
+            //{
+            //    MealPlan = new MealPlan(),
+            //    MealPlanTypes = mealPlanTypes
+            //};
+
+            var vm = new MealPlanFormViewModel();
+            vm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
+
+
+        return View(vm);
     }
 
     // POST: MealPlanController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(IFormCollection collection)
+    public ActionResult Create(MealPlanFormViewModel vm)
     {
         try
         {
-            return RedirectToAction(nameof(Index));
+                string userProfileId = GetCurrentUserProfileId();
+                //vm.MealPlan.UserProfileId = GetCurrentUserProfileId();
+                var currentUser = _userProfileRepo.GetByFirebaseUserId(userProfileId);
+                vm.MealPlan.UserProfileId = currentUser.Id;
+                _mealPlanRepo.AddMealPlan(vm.MealPlan);
+                return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View();
+                vm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
+                return View(vm);
         }
     }
 
-    // GET: MealPlanController/Edit/5
-    public ActionResult Edit(int id)
+
+
+
+        //public ActionResult Create(MealPlan mealPlan)
+        //{
+        //    try
+        //    {
+        //        mealPlan.UserProfileId = GetCurrentUserProfileId();
+        //        _mealPlanRepo.AddMealPlan(mealPlan);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View(mealPlan);
+        //    }
+        //}
+
+
+
+
+
+        // GET: MealPlanController/Edit/5
+        public ActionResult Edit(int id)
     {
         return View();
     }
@@ -106,5 +156,23 @@ namespace ForkToFit.Controllers
             return View();
         }
     }
+
+
+
+        //private int GetCurrentUserProfileId()
+        //{
+        //    string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    return int.Parse(id);
+        //}
+
+        private string GetCurrentUserProfileId()
+        {
+            string userProfileId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return userProfileId;
+        }
+
+
+
+    }
 }
-}
+

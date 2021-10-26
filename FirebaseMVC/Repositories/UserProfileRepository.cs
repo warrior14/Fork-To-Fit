@@ -62,7 +62,7 @@ namespace ForkToFit.Repositories
             }
         }
 
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        public UserProfile GetByFirebaseUserId(string userProfileId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -72,9 +72,9 @@ namespace ForkToFit.Repositories
                     cmd.CommandText = @"
                                     SELECT Id, Name, Email, FirebaseUserId, DateCreated, BmrInfo
                                     FROM UserProfile
-                                    WHERE FirebaseUserId = @FirebaseuserId";
+                                    WHERE Id = @Id";
 
-                    cmd.Parameters.AddWithValue("@FirebaseUserId", firebaseUserId);
+                    cmd.Parameters.AddWithValue("@Id", userProfileId);
 
                     UserProfile userProfile = null;
 

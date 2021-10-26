@@ -27,6 +27,7 @@ namespace ForkToFit
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IDisplayedFoodRepository, DisplayedFoodRepository>();
             services.AddTransient<IMealPlanRepository, MealPlanRepository>();
+            services.AddTransient<IMealPlanTypeRepository, MealPlanTypeRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
