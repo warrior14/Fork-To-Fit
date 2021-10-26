@@ -47,7 +47,7 @@ namespace ForkToFit.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                             MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
-                            CalorieTracker = reader.GetString(reader.GetOrdinal("CalorieTracker"))                          
+                            CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker"))                          
                         };
 
                         mealPlans.Add(mealPlan);

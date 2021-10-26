@@ -26,6 +26,7 @@ namespace ForkToFit
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IDisplayedFoodRepository, DisplayedFoodRepository>();
+            services.AddTransient<IMealPlanRepository, MealPlanRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ForkToFit.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,33 @@ namespace ForkToFit.Controllers
 {
     public class MealPlanController : Controller
 {
-    // GET: MealPlanController
-    public ActionResult Index()
+
+
+
+        private readonly IMealPlanRepository _mealPlanRepo;
+
+        // ASP.NET will give us an instance of our DisplayedFood Repository. This is called "Dependency Injection" 
+
+
+        // this is a constructor that takes in a parameter of IDisplayedFoodRepository and the displayedFoodRepository is the variable that holds it.
+        public MealPlanController(IMealPlanRepository mealPlanRepository)
+        {
+            _mealPlanRepo = mealPlanRepository;
+        }
+
+
+
+
+        // GET: MealPlanController
+        public ActionResult Index()
     {
-        return View();
+
+            List<MealPlan> mealPlans = _mealPlanRepo.GetAllMealPlans();
+
+        return View(mealPlans);
     }
+
+
 
     // GET: MealPlanController/Details/5
     public ActionResult Details(int id)
