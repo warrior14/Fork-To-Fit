@@ -64,6 +64,34 @@ namespace ForkToFit.Repositories
 
 
 
+        public void AddMealPlan(MealPlan mealPlan)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO MealPlan ([Name], UserProfileId, MealPlanTypeId, CalorieTracker)
+                    OUTPUT INSERTED.ID
+                    VALUES (@name, @userProfileId, @mealPlanTypeId, @calorieTracker);
+                    ";
+
+                    cmd.Parameters.AddWithValue("@name", mealPlan.Name);
+                    cmd.Parameters.AddWithValue("@userProfileId", mealPlan.UserProfileId);
+                    cmd.Parameters.AddWithValue("@mealPlanTypeId", mealPlan.MealPlanTypeId);
+                    cmd.Parameters.AddWithValue("@calorieTracker", mealPlan.CalorieTracker);
+
+                    mealPlan.Id = (int)cmd.ExecuteScalar();
+
+                }
+            }
+        }
+
+
+
+
+
 
     }
 }

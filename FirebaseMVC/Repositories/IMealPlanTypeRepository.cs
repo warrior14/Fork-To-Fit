@@ -4,13 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using ForkToFit.Models;
 
-
 namespace ForkToFit.Repositories
 {
-    public interface IMealPlanRepository
+    public interface IMealPlanTypeRepository
     {
-        List<MealPlan> GetAllMealPlans();
-
-        void AddMealPlan(MealPlan mealPlan);
+        List<MealPlanType> GetAllMealPlanTypes();
     }
 }
