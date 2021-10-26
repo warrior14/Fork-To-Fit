@@ -139,6 +139,8 @@ namespace ForkToFit.Controllers
     // GET: MealPlanController/Delete/5
     public ActionResult Delete(int id)
     {
+
+        MealPlan mealPlan = _mealPlanRepo
         return View();
     }
 
