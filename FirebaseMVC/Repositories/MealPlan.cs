@@ -6,6 +6,6 @@
         public string Name { get; internal set; }
         public int UserProfileId { get; internal set; }
         public int MealPlanTypeId { get; internal set; }
-        public string CalorieTracker { get; internal set; }
+        public int CalorieTracker { get; internal set; }
     }
 }
