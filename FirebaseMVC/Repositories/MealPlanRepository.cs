@@ -93,5 +93,65 @@ namespace ForkToFit.Repositories
 
 
 
+        // Delete :
+        public void DeleteMealPlan(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM MealPlan
+                                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+        public MealPlan GetMealPlanById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id
+                        FROM MealPlan
+                        WHERE Id = @id
+                        ";
+
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    MealPlan mealPlan = null;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (mealPlan == null)
+                            {
+                                mealPlan = new MealPlan
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("Id"))
+                                };
+                            }
+
+                        }
+                    }
+                    return mealPlan;
+                }
+            }
+        }
+
+
+
+
+
+
     }
 }
