@@ -118,21 +118,28 @@ namespace ForkToFit.Controllers
         // GET: MealPlanController/Edit/5
         public ActionResult Edit(int id)
     {
-        return View();
+
+            MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
+            if (mealPlan == null)
+            {
+                return NotFound();
+            }
+        return View(mealPlan);
     }
 
     // POST: MealPlanController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
+    public ActionResult Edit(int id, MealPlan mealPlan)
     {
         try
         {
+            _mealPlanRepo.EditMealPlan(mealPlan);
             return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View();
+            return View(mealPlan);
         }
     }
 
@@ -140,22 +147,24 @@ namespace ForkToFit.Controllers
     public ActionResult Delete(int id)
     {
 
-        MealPlan mealPlan = _mealPlanRepo
-        return View();
+        MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
+        return View(mealPlan);
     }
 
     // POST: MealPlanController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
+    public ActionResult Delete(int id, MealPlan mealPlan)
     {
         try
         {
+                mealPlan = _mealPlanRepo.GetMealPlanById(id);
+                _mealPlanRepo.DeleteMealPlan(id);
             return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View();
+            return View(mealPlan);
         }
     }
 

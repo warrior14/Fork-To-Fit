@@ -150,6 +150,30 @@ namespace ForkToFit.Repositories
 
 
 
+        public void EditMealPlan (MealPlan mealPlan)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        Update MealPlan
+                        SET
+                            [Name] = @name
+                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@name", mealPlan.Name);
+                    cmd.Parameters.AddWithValue("@id", mealPlan.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+
 
 
 

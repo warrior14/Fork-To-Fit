@@ -12,5 +12,12 @@ namespace ForkToFit.Repositories
         List<MealPlan> GetAllMealPlans();
 
         void AddMealPlan(MealPlan mealPlan);
+
+        void DeleteMealPlan(int id);
+
+        MealPlan GetMealPlanById(int id);
+
+        void EditMealPlan(MealPlan mealPlan);
+
     }
 }
