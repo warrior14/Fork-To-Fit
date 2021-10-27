@@ -80,9 +80,10 @@ namespace ForkToFit.Controllers
     {
         try
         {
+                // use this method if you need to create,edit etc... and you need to refer something from the userprofile table
                 string userProfileId = GetCurrentUserProfileId();
                 //vm.MealPlan.UserProfileId = GetCurrentUserProfileId();
-                var currentUser = _userProfileRepo.GetByFirebaseUserId(userProfileId);
+                var currentUser = _userProfileRepo.GetByUserProfileId(userProfileId);
                 vm.MealPlan.UserProfileId = currentUser.Id;
                 _mealPlanRepo.AddMealPlan(vm.MealPlan);
                 return RedirectToAction(nameof(Index));
@@ -158,7 +159,7 @@ namespace ForkToFit.Controllers
     {
         try
         {
-                mealPlan = _mealPlanRepo.GetMealPlanById(id);
+                //mealPlan = _mealPlanRepo.GetMealPlanById(id);
                 _mealPlanRepo.DeleteMealPlan(id);
             return RedirectToAction(nameof(Index));
         }

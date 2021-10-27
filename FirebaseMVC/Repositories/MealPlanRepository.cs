@@ -121,9 +121,11 @@ namespace ForkToFit.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id
-                        FROM MealPlan
-                        WHERE Id = @id
+                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
+                        FROM MealPlan mp
+                        LEFT JOIN MealPlanType mpt
+                        ON mpt.Id = mp.MealPlanTypeId
+                        WHERE mp.Id = @id
                         ";
 
 
@@ -137,13 +139,23 @@ namespace ForkToFit.Repositories
                             {
                                 mealPlan = new MealPlan
                                 {
-                                    Id = reader.GetInt32(reader.GetOrdinal("Id"))
+                                    Id = reader.GetInt32(reader.GetOrdinal("mpId")),
+                                    Name = reader.GetString(reader.GetOrdinal("mpName")),
+                                    UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                    MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
+                                    CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker")),
+                                    MealPlanType = new MealPlanType()
+                                    {
+                                        Id = reader.GetInt32(reader.GetOrdinal("mptId")),
+                                        Name = reader.GetString(reader.GetOrdinal("mptName"))
+                                    }
                                 };
                             }
 
                         }
+                        return mealPlan;
                     }
-                    return mealPlan;
+                    //return mealPlan;
                 }
             }
         }
