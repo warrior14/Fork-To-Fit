@@ -17,5 +17,7 @@ namespace ForkToFit.Repositories
 
         MealPlan GetMealPlanById(int id);
 
+        MealPlan EditMealPlan(MealPlan mealPlan);
+
     }
 }

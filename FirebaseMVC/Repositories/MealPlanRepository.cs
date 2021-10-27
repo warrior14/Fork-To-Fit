@@ -150,7 +150,7 @@ namespace ForkToFit.Repositories
 
 
 
-        public void UpdateMealPlan (MealPlan mealPlan)
+        public void EditMealPlan (MealPlan mealPlan)
         {
             using (SqlConnection conn = Connection)
             {
