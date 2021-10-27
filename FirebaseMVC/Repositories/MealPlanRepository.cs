@@ -172,11 +172,15 @@ namespace ForkToFit.Repositories
                     cmd.CommandText = @"
                         Update MealPlan
                         SET
-                            [Name] = @name
+                            [Name] = @name,
+                         MealPlanTypeId = @mealPlanTypeId,
+                         CalorieTracker = @calorieTracker
                         WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@name", mealPlan.Name);
                     cmd.Parameters.AddWithValue("@id", mealPlan.Id);
+                    cmd.Parameters.AddWithValue("@mealPlanTypeId", mealPlan.MealPlanTypeId);
+                    cmd.Parameters.AddWithValue("@calorieTracker", mealPlan.CalorieTracker);
 
                     cmd.ExecuteNonQuery();
                 }
