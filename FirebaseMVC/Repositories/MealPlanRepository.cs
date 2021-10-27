@@ -60,7 +60,41 @@ namespace ForkToFit.Repositories
             }
         }
 
+        public List<FoodSelected> GetAllMealPlanFoods()
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT Id, MealPlanId, DayCategoryId, MealTimeId, DisplayedFood
+                    FROM FoodSelected
+                    ";
 
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<FoodSelected> foodSelecteds = new List<FoodSelected>();
+
+                    while(reader.Read())
+                    {
+                        FoodSelected selectedFood = new FoodSelected
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            MealPlanId = reader.GetInt32(reader.GetOrdinal("MealPlanId")),
+                            DayCategoryId = reader.GetInt32(reader.GetOrdinal("DayCategoryId")),
+                            MealTimeId = reader.GetInt32(reader.GetOrdinal("MealTimeId")),
+                            DisplayedFood = reader.GetInt32(reader.GetOrdinal("DisplayedFood"))
+                        };
+                    }
+
+                    reader.Close();
+
+                    return foodSelecteds;
+
+                }
+            }
+        }
 
 
 
