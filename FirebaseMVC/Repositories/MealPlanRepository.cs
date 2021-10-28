@@ -104,6 +104,8 @@ namespace ForkToFit.Repositories
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
                             MacronutrientCategoryName = reader.GetString(reader.GetOrdinal("mcName"))
                         };
+
+                        //dont forget that if you make a list then you have to return
                         foodSelecteds.Add(foodSelected);
                     }
 

@@ -28,15 +28,24 @@ namespace ForkToFit.Controllers
 
 
         // GET: DisplayedFoodController
+        // ORIGINAL:
+        //public ActionResult Index()
+        //{
+        //    List<DisplayedFood> displayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
+
+        //    return View(displayedFoods);
+        //}
+
+        // VIEW MODEL:
         public ActionResult Index()
         {
             List<DisplayedFood> displayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
 
-            return View(displayedFoods);
+            return View();
         }
 
-    // GET: DisplayedFoodController/Details/5
-    public ActionResult Details(int id)
+        // GET: DisplayedFoodController/Details/5
+        public ActionResult Details(int id)
     {
         return View();
     }
