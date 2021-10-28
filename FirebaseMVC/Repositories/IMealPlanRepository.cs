@@ -19,5 +19,7 @@ namespace ForkToFit.Repositories
 
         void EditMealPlan(MealPlan mealPlan);
 
+        List<FoodSelected> GetAllMealPlanFoodsByMealPlanId(int mealPlanId);
+
     }
 }

@@ -50,8 +50,11 @@ namespace ForkToFit.Controllers
     // GET: MealPlanController/Details/5
     public ActionResult Details(int id)
     {
-        return View();
+
+        List<FoodSelected> foodSelecteds = _mealPlanRepo.GetAllMealPlanFoodsByMealPlanId(id);
+        return View(foodSelecteds);
     }
+
 
     // GET: MealPlanController/Create
     public ActionResult Create()

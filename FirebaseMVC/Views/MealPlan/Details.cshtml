@@ -1,4 +1,4 @@
-﻿@model ForkToFit.Models.MealPlan
+﻿@model IEnumerable<ForkToFit.Models.FoodSelected>
 
 @{
     ViewData["Title"] = "Details";
@@ -7,45 +7,89 @@
 <h1>Details</h1>
 
 <div>
-    <h4>MealPlan</h4>
+    <h4>FoodSelected</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @*@Html.DisplayNameFor(model => model.Id)*@
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @*@Html.DisplayNameFor(model => model.UserProfileId)*@
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserProfileId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MealPlanTypeId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MealPlanTypeId)
-        </dd>
 
-
-
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CalorieTracker)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CalorieTracker)
-        </dd>
+    @foreach (var item in Model)
+    {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.MealPlanId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.MealPlanId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.DayCategoryId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.DayCategoryId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.MealTimeId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.MealTimeId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.DisplayedFoodId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.DisplayedFoodId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.ServingSize)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.ServingSize)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.Calories)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Calories)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.MacroCategoryId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.MacroCategoryId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.ImageUrl)
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@item.ImageUrl" alt="Food Selected" />
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(modelItem => item.MacronutrientCategoryName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.MacronutrientCategoryName)
+            </dd>
+            <div>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                <a asp-action="Index">Back to List</a>
+            </div>
+        }
     </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+
