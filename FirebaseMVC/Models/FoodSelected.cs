@@ -6,10 +6,11 @@ using System.ComponentModel;
 
 namespace ForkToFit.Models
 {
-    public class FoodSelected
+    public class FoodSelected : DisplayedFood
     {
         public int Id { get; set; }
 
+      
 
         public int MealPlanId { get; set; }
 

@@ -60,6 +60,8 @@ namespace ForkToFit.Repositories
             }
         }
 
+  
+        // connect to displayed food and also access the name of the mealplantype name
         public List<FoodSelected> GetAllMealPlanFoods()
         {
             using (SqlConnection conn = Connection)
@@ -68,8 +70,14 @@ namespace ForkToFit.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT Id, MealPlanId, DayCategoryId, MealTimeId, DisplayedFood
-                    FROM FoodSelected
+                    SELECT fs.Id, fs.MealPlanId, fs.DayCategoryId, fs.MealTimeId, fs.DisplayedFoodId,
+                    df.Name [dfName], df.ServingSize, df.Calories, df.Description, df.ImageUrl , 
+                    mc.Name [mcName]
+                    FROM FoodSelected fs
+                    LEFT JOIN DisplayedFood df
+                    ON fs.DisplayedFoodId = df.Id
+                    LEFT JOIN MacroCategory mc
+                    ON df.MacroCategoryId = mc.Id
                     ";
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -78,16 +86,27 @@ namespace ForkToFit.Repositories
 
                     while(reader.Read())
                     {
-                        FoodSelected selectedFood = new FoodSelected
+                        FoodSelected foodSelected = new FoodSelected
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             MealPlanId = reader.GetInt32(reader.GetOrdinal("MealPlanId")),
                             DayCategoryId = reader.GetInt32(reader.GetOrdinal("DayCategoryId")),
                             MealTimeId = reader.GetInt32(reader.GetOrdinal("MealTimeId")),
-                            DisplayedFood = reader.GetInt32(reader.GetOrdinal("DisplayedFood"))
+                            DisplayedFoodId = reader.GetInt32(reader.GetOrdinal("DisplayedFood")),
+                            Name = reader.GetString(reader.GetOrdinal("dfName")),
+                            ServingSize = reader.GetInt32(reader.GetOrdinal("ServingSize")),
+                            Calories = reader.GetInt32(reader.GetOrdinal("Calories")),
+                            Description = reader.GetString(reader.GetOrdinal("Description")),
+                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                            MacronutrientCategoryName = reader.GetString(reader.GetOrdinal("mcName"))
                         };
+                        //MacroCategory macroCategory = new MacroCategory
+                        //{
+                        //    Name = reader.GetString(reader.GetOrdinal("mcName")),
+                        //};
+                        //selectedFood.Add(macroCategory);
                     }
-
+                    
                     reader.Close();
 
                     return foodSelecteds;

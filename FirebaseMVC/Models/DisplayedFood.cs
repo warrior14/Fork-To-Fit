@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ForkToFit.Models
 {
-    public class DisplayedFood
+    public class DisplayedFood : MacroCategory
     {
         public int Id { get; set; }
 

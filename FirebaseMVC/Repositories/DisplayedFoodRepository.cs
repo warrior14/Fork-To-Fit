@@ -62,5 +62,44 @@ namespace ForkToFit.Repositories
 
 
 
+        //public FoodSelected GetFoodDetails(int displayedFoodId)
+        //{
+        //    // Its going to make a query to the database to find the DisplayedFood.
+        //    // It will use the displayedFoodId foreign key inside the foodSelected to search for the DisplayedFood object.
+        //    // Once found and retreived this method should return the properties of that object such as:
+        //    // Name, Serving Size, Calories, Description, Macro Category Id, and Image.
+        //    using (SqlConnection conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (SqlCommand cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"
+        //              SELECT df.Name [dfName], df.ServingSize, df.Calories, df.Description, df.MacroCategoryId, df.ImageUrl,
+        //                     mc.Id, mc.Name 
+        //              FROM DisplayedFood df
+        //              LEFT JOIN MacroCategory mc
+        //              ON df.MacroCategoryId = mc.Id
+        //            WHERE df. = @displayedFoodId
+        //            ";
+
+
+        //            SqlDataReader reader = cmd.ExecuteReader();
+
+        //            FoodSelected foodSelecteds = new FoodSelected();
+
+        //            while (reader.Read())
+        //                FoodSelected foodSelected = new
+        //                {
+
+        //                }
+        //        }
+        //    }
+        //}
+
+
+
+
+
+
     }
 }

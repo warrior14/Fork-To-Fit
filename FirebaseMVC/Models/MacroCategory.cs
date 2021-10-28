@@ -9,6 +9,6 @@ namespace ForkToFit.Models
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string MacronutrientCategoryName { get; set; }
     }
 }
