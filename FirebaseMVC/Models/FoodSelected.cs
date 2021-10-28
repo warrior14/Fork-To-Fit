@@ -10,8 +10,6 @@ namespace ForkToFit.Models
     {
         public int Id { get; set; }
 
-      
-
         public int MealPlanId { get; set; }
 
         public int DayCategoryId { get; set; }
@@ -19,7 +17,6 @@ namespace ForkToFit.Models
         public int MealTimeId { get; set; }
 
         public int DisplayedFoodId { get; set; }
-
 
     }
 }

@@ -10,6 +10,6 @@ namespace ForkToFit.Repositories
     {
         List<MealPlanType> GetAllMealPlanTypes();
 
-        List<FoodSelected> GetAllMealPlanFoods();
+
     }
 }
