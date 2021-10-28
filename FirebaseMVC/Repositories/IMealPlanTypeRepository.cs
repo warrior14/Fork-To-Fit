@@ -9,5 +9,7 @@ namespace ForkToFit.Repositories
     public interface IMealPlanTypeRepository
     {
         List<MealPlanType> GetAllMealPlanTypes();
+
+        List<FoodSelected> GetAllMealPlanFoods();
     }
 }
