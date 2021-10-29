@@ -11,5 +11,6 @@ namespace ForkToFit.Models.ViewModels
 
         public List<DisplayedFood> DisplayedFoods { get; set; }
         public List<MealPlan> MealPlans { get; set; }
+
     }
 }
