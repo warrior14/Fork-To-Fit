@@ -45,12 +45,16 @@ namespace ForkToFit.Repositories
                         MealPlan mealPlan = new MealPlan
                         {
                             // storing the values returned from the reader to the corresponding properties/columns
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            Id = reader.GetInt32(reader.GetOrdinal("mpId")),
+                            Name = reader.GetString(reader.GetOrdinal("mpName")),
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                             MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
                             CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker")),
-                            MealPla
+                            MealPlanType = new MealPlanType()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("mptId")),
+                                Name = reader.GetString(reader.GetOrdinal("mptName"))
+                            }
                         };
 
                         mealPlans.Add(mealPlan);
