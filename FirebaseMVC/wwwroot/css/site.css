@@ -2,37 +2,47 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-family: 'Kalam', cursive;
+}
+
+* {
+    font-family: 'Kalam', cursive;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
+    font-family: 'Kalam', cursive;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    font-family: 'Kalam', cursive;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    font-family: 'Kalam', cursive;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: 'Kalam', cursive;
 }
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+        font-family: 'Kalam', cursive;
+    }
 }
 
 .border-top {
@@ -47,25 +57,43 @@ html {
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
+    font-family: 'Kalam', cursive;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    font-family: 'Kalam', cursive;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Kalam', cursive;
 }
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    font-family: 'Kalam', cursive;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+
+
+.parallax {
+    /*background image*/
+    background-image: url('https://images.creativemarket.com/0.1.0/ps/5912337/1820/1213/m1/fpnw/wm1/tq3dpzrfpjdhuzk9yqb2zgsq446ssnplh9b8fzsbeo1oemh6ec5kkpp6gamxff7e-.jpg?1550561650&s=5c8e2e797d2405585e6676d70d42229f');
+    /* full height*/
+    height: 100%;
+    /*center and scale image*/
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
