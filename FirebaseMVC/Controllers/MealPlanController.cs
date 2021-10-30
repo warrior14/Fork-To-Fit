@@ -39,11 +39,16 @@ namespace ForkToFit.Controllers
 
         // GET: MealPlanController
         public ActionResult Index()
-    {
-            List<MealPlan> mealPlans = _mealPlanRepo.GetAllMealPlans();
+        {
+            //var vm = new MealPlanListViewModel();
 
-        return View(mealPlans);
-    }
+            //vm.MealPlans = _mealPlanRepo.GetAllMealPlans();
+
+            //return View(vm);
+            var mealPlans = _mealPlanRepo.GetAllMealPlans();
+
+            return View(mealPlans);
+        }
 
 
 
@@ -120,32 +125,29 @@ namespace ForkToFit.Controllers
 
 
         // GET: MealPlanController/Edit/5
-        public ActionResult Edit(int id)
-    {
+        //public ActionResult Edit(int id)
+        //{
 
-            MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
-            if (mealPlan == null)
-            {
-                return NotFound();
-            }
-        return View(mealPlan);
-    }
+        //    var evm = new EditMealPlanFormViewModel();
+        //    evm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
+        //    return View(evm);
+        //}
 
     // POST: MealPlanController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, MealPlan mealPlan)
-    {
-        try
-        {
-            _mealPlanRepo.EditMealPlan(mealPlan);
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
-            return View(mealPlan);
-        }
-    }
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public ActionResult Edit(int id, EditMealPlanFormViewModel evm)
+    //{
+    //    try
+    //    {
+    //        _mealPlanRepo.EditMealPlan(evm.MealPlan);
+    //        return RedirectToAction(nameof(Index));
+    //    }
+    //    catch
+    //    {
+    //        return View(evm);
+    //    }
+    //}
 
     // GET: MealPlanController/Delete/5
     public ActionResult Delete(int id)

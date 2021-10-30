@@ -19,10 +19,10 @@ namespace ForkToFit.Models
 
         public MealPlanType MealPlanType { get; set; }
 
-        public List<MealPlanType> MealPlanTypes { get; set; } 
+        //public List<MealPlanType> MealPlanTypes { get; set; } 
 
         [DisplayName("Calories Needed")]
-        public int CalorieTracker { get; set; }
+        public int? CalorieTracker { get; set; }
 
     }
 }
