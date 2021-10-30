@@ -29,8 +29,10 @@ namespace ForkToFit.Repositories
                 {
                     // line below must match all the columns in your database
                     cmd.CommandText = @"
-                        SELECT Id, Name, UserProfileId, MealPlanTypeId, CalorieTracker
-                        FROM MealPlan
+                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
+                        FROM MealPlan mp
+                        LEFT JOIN MealPlanType mpt
+                        ON mp.MealPlanTypeId = mpt.Id
                     ";
                     // read all the values and initializing the reader
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -47,7 +49,8 @@ namespace ForkToFit.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                             MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
-                            CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker"))                          
+                            CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker")),
+                            MealPla
                         };
 
                         mealPlans.Add(mealPlan);
