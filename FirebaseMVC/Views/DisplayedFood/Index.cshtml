@@ -1,161 +1,113 @@
-﻿@model IEnumerable<ForkToFit.Models.ViewModels.AddFoodToMealPlanViewModel>
+﻿@model ForkToFit.Models.ViewModels.AddFoodToMealPlanViewModel
 
 @{
     ViewData["Title"] = "Food Selections";
 }
 
-<h1>Food Options</h1>
+<h1>Food Selections</h1>
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Id)
+            </th>*@
+            <th>
+               @* @Html.DisplayNameFor(model => model.Name)*@
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @*@Html.DisplayNameFor(model => model.ServingSize)*@
+                Serving Size (oz)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ServingSize)
+                @*@Html.DisplayNameFor(model => model.Calories)*@
+                Calories
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Calories)
+                @*@Html.DisplayNameFor(model => model.Description)*@
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @*@Html.DisplayNameFor(model => model.MacroCategoryId)*@
+                Macronutrient Category Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MacroCategoryId)
+                @*@Html.DisplayNameFor(model => model.ImageUrl)*@
+                Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                Meal Plan Names
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+
+        @foreach (var item in Model.DisplayedFoods)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServingSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Calories)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MacroCategoryId)
-                </td>
-                <td>
-                    <img src="@item.ImageUrl" alt="Food" />
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { item.Id })
-                </td>
-            </tr>
+            <form asp-controller="DisplayedFood" asp-action="Taco">
+                <tr>
+                    <div class="form-group">
+                        <td>
+                            <input asp-for="FoodSelected.DisplayedFoodId" value="@item.Id"  class="control-label" hidden/>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                    </div>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServingSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Calories)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MacroCategory.MacronutrientCategoryName)
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" alt="Food" />
+                    </td>
+                    <td>
+                        @*<label asp-for="DisplayedFoods.MealPlan" class="control-label">Meal Plan</label>*@
+
+                        <select asp-for="FoodSelected.MealPlanId">
+                            <option value="">Select Meal Plan</option>
+                            @foreach (MealPlan mealPlan in Model.MealPlans)
+                            {
+                                <option value="@mealPlan.Id">@mealPlan.Name</option>
+                            }
+                        </select>
+                        <button type="submit" value="Taco">Add To Meal Plan</button>
+
+                        @*@Html.ActionLink("AddFoodToMealPlan", new { id=mealPlan.Id })*@
+                    </td>
+                    @*<td>
+                @Html.ActionLink("Edit", "Edit", new { item.Id }) |
+                @Html.ActionLink("Details", "Details", new { item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { item.Id })
+            </td>*@
+                </tr>
+            </form>
         }
     </tbody>
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*@model IEnumerable<ForkToFit.Models.DisplayedFood>
-
-    @{
-        ViewData["Title"] = "Food Selections";
+<div>
+    @*<select asp-for="MealPlans.MealPlan.Id" class="form-control">*@
+    @*<select asp-for="MealPlans">
+    <option value="">Select Meal Plan</option>
+    @foreach (MealPlan mealPlan in Model.MealPlans)
+    {
+        <option value="@mealPlan.Id">@mealPlan.Name</option>
     }
-
-    <h1>Food Options</h1>
-
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ServingSize)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Calories)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MacroCategoryId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ImageUrl)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServingSize)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Calories)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MacroCategoryId)
-                </td>
-                <td>
-                    <img src="@item.ImageUrl" alt="Food" />
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { item.Id })
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>*@
+    </select>*@
+    @*<span asp-validation-for="MealPlan.MealPlanTypeId" class="text-danger"></span>*@
+</div>

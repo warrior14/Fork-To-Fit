@@ -39,11 +39,12 @@ namespace ForkToFit.Controllers
 
         // GET: MealPlanController
         public ActionResult Index()
-    {
+        {
             List<MealPlan> mealPlans = _mealPlanRepo.GetAllMealPlans();
+            var filteredMealPlans = mealPlans.Where(mealPlan => mealPlan.UserProfileId == GetLoggedUserProfileId());
 
-        return View(mealPlans);
-    }
+            return View(filteredMealPlans);
+        }
 
 
 
@@ -128,13 +129,6 @@ namespace ForkToFit.Controllers
 
             return View(evm);
 
-
-            //    MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
-            //    if (mealPlan == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //return View(mealPlan);
         }
 
     // POST: MealPlanController/Edit/5
@@ -153,18 +147,7 @@ namespace ForkToFit.Controllers
             return View(evm);
         }
     }
-        //public ActionResult Edit(int id, MealPlan mealPlan)
-        //{
-        //    try
-        //    {
-        //        _mealPlanRepo.EditMealPlan(mealPlan);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View(mealPlan);
-        //    }
-        //}
+
 
         // GET: MealPlanController/Delete/5
         public ActionResult Delete(int id)
@@ -193,11 +176,11 @@ namespace ForkToFit.Controllers
 
 
 
-        //private int GetCurrentUserProfileId()
-        //{
-        //    string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    return int.Parse(id);
-        //}
+        private int GetLoggedUserProfileId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
+        }
 
         private string GetCurrentUserProfileId()
         {

@@ -251,11 +251,86 @@ namespace ForkToFit.Repositories
             }
         }
 
+        public List<MealPlan> GetMealPlansByUserId(int userProfileId)
+        {
 
+            //making the sql connectioin
+            using (SqlConnection conn = Connection)
+            {
+                //opening the command
+                conn.Open();
+                //creating the command
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    // line below must match all the columns in your database
+                    cmd.CommandText = @"
+                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
+                        FROM MealPlan mp
+                        LEFT JOIN MealPlanType mpt
+                        ON mp.MealPlanTypeId = mpt.Id
+                        WHERE mp.UserProfileId = @id
+                    ";
 
+                    cmd.Parameters.AddWithValue("@id", userProfileId);
+                    // read all the values and initializing the reader
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    // creating a variable to hold the list of displayed foods
+                    List<MealPlan> mealPlans = new List<MealPlan>();
+                    // using a while is necessary so that it gets everything in the list
+                    while (reader.Read())
+                    {
+                        // creating a new instance of displayedfood
+                        MealPlan mealPlan = new MealPlan
+                        {
+                            // storing the values returned from the reader to the corresponding properties/columns
+                            Id = reader.GetInt32(reader.GetOrdinal("mpId")),
+                            Name = reader.GetString(reader.GetOrdinal("mpName")),
+                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                            MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
+                            CalorieTracker = DbUtils.GetNullableInt(reader, "CalorieTracker"),
+                            MealPlanType = new MealPlanType
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("mptId")),
+                                Name = reader.GetString(reader.GetOrdinal("mptName"))
+                            }
+                        };
 
+                        mealPlans.Add(mealPlan);
+                    }
 
+                    reader.Close();
 
+                    return mealPlans;
+                }
+            }
 
-    }
+        }
+
+        // Patch Meal Plan
+        //void PatchMealPlan(MealPlan mealPlan)
+        //{
+        //    using (SqlConnection conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (SqlCommand cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"
+        //                Update MealPlan
+        //                SET
+        //                     = @name,
+        //                 MealPlanTypeId = @mealPlanTypeId,
+        //                 CalorieTracker = @calorieTracker
+        //                WHERE MealPlan.Id = @id";
+
+        //            cmd.Parameters.AddWithValue("@name", mealPlan.Name);
+        //            cmd.Parameters.AddWithValue("@id", mealPlan.Id);
+        //            cmd.Parameters.AddWithValue("@mealPlanTypeId", mealPlan.MealPlanTypeId);
+        //            cmd.Parameters.AddWithValue("@calorieTracker", mealPlan.CalorieTracker);
+
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
+     }
 }
