@@ -1,4 +1,5 @@
-﻿@model ForkToFit.Models.ViewModels.EditMealPlanFormViewModel
+﻿@model ForkToFit.Models.ViewModels.MealPlanFormViewModel
+@*@model ForkToFit.Models.MealPlan*@
 
 @{
     ViewData["Title"] = "Edit Your Meal Plan";
@@ -6,13 +7,14 @@
 
 <h1>Edit Meal Plan</h1>
 
-<h4>MealPlan</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <div class="form-group">
+                <input asp-for="MealPlan.Id" type="hidden" />
+            </div>
             <div class="form-group">
                 <label asp-for="MealPlan.Name" class="control-label"></label>
                 <input asp-for="MealPlan.Name" class="form-control" />

@@ -236,10 +236,10 @@ namespace ForkToFit.Repositories
                     cmd.CommandText = @"
                         Update MealPlan
                         SET
-                            [Name] = @name,
+                            Name = @name,
                          MealPlanTypeId = @mealPlanTypeId,
                          CalorieTracker = @calorieTracker
-                        WHERE Id = @id";
+                        WHERE MealPlan.Id = @id";
 
                     cmd.Parameters.AddWithValue("@name", mealPlan.Name);
                     cmd.Parameters.AddWithValue("@id", mealPlan.Id);
