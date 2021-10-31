@@ -6,7 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ForkToFit.Models;
 using ForkToFit.Repositories;
-
+using ForkToFit.Models.ViewModels;
+using System.Security.Claims;
 
 namespace ForkToFit.Controllers
 {
@@ -14,14 +15,16 @@ namespace ForkToFit.Controllers
 {
 
         private readonly IDisplayedFoodRepository _displayedFoodRepo;
+        private readonly IMealPlanRepository _mealPlanRepo;
 
         // ASP.NET will give us an instance of our DisplayedFood Repository. This is called "Dependency Injection" 
-       
+
 
         // this is a constructor that takes in a parameter of IDisplayedFoodRepository and the displayedFoodRepository is the variable that holds it.
-        public DisplayedFoodController(IDisplayedFoodRepository displayedFoodRepository)
+        public DisplayedFoodController(IDisplayedFoodRepository displayedFoodRepository, IMealPlanRepository mealPlanRepository)
         {
             _displayedFoodRepo = displayedFoodRepository;
+            _mealPlanRepo = mealPlanRepository;
         }
 
 
@@ -39,9 +42,22 @@ namespace ForkToFit.Controllers
         // VIEW MODEL:
         public ActionResult Index()
         {
-            List<DisplayedFood> displayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
+            var currentUserId = GetLoggedUserProfileId();
+            var dfvm = new AddFoodToMealPlanViewModel();
+            dfvm.MealPlans = _mealPlanRepo.GetMealPlansByUserId(currentUserId);
+            dfvm.DisplayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
+            //dfvm.FoodSelected = null;
+            
+            return View(dfvm);
+            //List<DisplayedFood> displayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
 
-            return View();
+            //return View(displayedFoods);
+        }
+
+        private int GetLoggedUserProfileId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
 
         // GET: DisplayedFoodController/Details/5
@@ -112,5 +128,14 @@ namespace ForkToFit.Controllers
             return View();
         }
     }
+
+
+    public ActionResult Taco(AddFoodToMealPlanViewModel what)
+        {
+            AddFoodToMealPlanViewModel theHeck = what;
+            Console.WriteLine(what);
+            Console.WriteLine(theHeck);
+            return null;
+        }
 }
 }

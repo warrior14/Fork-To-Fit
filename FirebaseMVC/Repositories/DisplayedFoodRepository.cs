@@ -25,8 +25,10 @@ namespace ForkToFit.Repositories
                 {
                     // line below must match all the columns in your database
                     cmd.CommandText = @"
-                        SELECT Id, Name, ServingSize, Calories, Description, MacroCategoryId, ImageUrl
-                        FROM DisplayedFood
+                        SELECT df.Id [dfId], df.Name, df.ServingSize, df.Calories, df.Description, df.MacroCategoryId, df.ImageUrl, 
+                               mc.Id [mcId], mc.MacronutrientCategoryName
+                        FROM DisplayedFood df
+                        LEFT JOIN MacroCategory mc ON df.MacroCategoryId = mc.Id
                     ";
                     // read all the values and initializing the reader
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -39,13 +41,18 @@ namespace ForkToFit.Repositories
                         DisplayedFood displayedFood = new DisplayedFood
                         {
                             // storing the values returned from the reader to the corresponding properties/columns
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Id = reader.GetInt32(reader.GetOrdinal("dfId")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ServingSize = reader.GetInt32(reader.GetOrdinal("ServingSize")),
                             Calories = reader.GetInt32(reader.GetOrdinal("Calories")),
                             Description = reader.GetString(reader.GetOrdinal("Description")),
                             MacroCategoryId = reader.GetInt32(reader.GetOrdinal("MacroCategoryId")),
-                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
+                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                            MacroCategory = new MacroCategory()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("mcId")),
+                                MacronutrientCategoryName = reader.GetString(reader.GetOrdinal("MacronutrientCategoryName"))
+                            }
                         };
 
                         displayedFoods.Add(displayedFood);
@@ -98,7 +105,54 @@ namespace ForkToFit.Repositories
 
 
 
+        public DisplayedFood GetDisplayedFoodById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT df.Id [dfId], df.Name [dfName], ServingSize, Calories, Description, MacroCategoryId, ImageUrl,
+                               mc.Id [mcId], mc.MacronutrientCategoryName
+                        FROM DisplayedFood df
+                        LEFT JOIN MacroCategory mc
+                        ON df.MacroCategoryId = mc.Id
+                        WHERE df.Id = @id
+                        ";
 
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    DisplayedFood displayedFood = null;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (displayedFood == null)
+                            {
+                                displayedFood = new DisplayedFood()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("dfId")),
+                                    Name = reader.GetString(reader.GetOrdinal("dfName")),
+                                    ServingSize = reader.GetInt32(reader.GetOrdinal("ServingSize")),
+                                    Calories = reader.GetInt32(reader.GetOrdinal("Calories")),
+                                    Description = reader.GetString(reader.GetOrdinal("Description")),
+                                    ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                                    MacroCategory = new MacroCategory()
+                                    {
+                                        Id = reader.GetInt32(reader.GetOrdinal("mcId")),
+                                        MacronutrientCategoryName = reader.GetString(reader.GetOrdinal("MacronutrientCategoryName"))
+                                    }
+                                };
+                            }
+
+                        }
+                        return displayedFood;
+                    }
+                    //return mealPlan;
+                }
+            }
+        }
 
 
     }

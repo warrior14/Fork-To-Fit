@@ -21,5 +21,9 @@ namespace ForkToFit.Repositories
 
         List<FoodSelected> GetAllMealPlanFoodsByMealPlanId(int mealPlanId);
 
+        List<MealPlan> GetMealPlansByUserId(int userProfileId);
+
+        //void PatchMealPlan(MealPlan mealPlan);
+
     }
 }

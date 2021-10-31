@@ -22,8 +22,13 @@ namespace ForkToFit.Models
         [DisplayName("Macronutrient Catergory")]
         public int MacroCategoryId { get; set; }
 
+        public MacroCategory MacroCategory { get; set; }
+
         [DisplayName("Image")]
         public string ImageUrl { get; set; }
+
+        public FoodSelected FoodSelected { get; set; }
+        public MealPlan MealPlan { get; set; }
 
 
     }
