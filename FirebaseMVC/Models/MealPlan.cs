@@ -22,7 +22,7 @@ namespace ForkToFit.Models
         public List<MealPlanType> MealPlanTypes { get; set; } 
 
         [DisplayName("Calories Needed")]
-        public int CalorieTracker { get; set; }
+        public int? CalorieTracker { get; set; }
 
     }
 }

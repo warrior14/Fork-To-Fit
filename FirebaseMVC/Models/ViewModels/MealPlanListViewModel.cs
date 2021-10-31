@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace ForkToFit.Models.ViewModels
 {
-    public class EditMealPlanFormViewModel
+    public class MealPlanListViewModel
     {
         public MealPlan MealPlan { get; set; }
-        public List<MealPlanType> MealPlanTypes { get; set; }
+        public List<MealPlan> MealPlans { get; set; }
+        //public List<MealPlanType> MealPlanTypes { get; set; }
     }
 }

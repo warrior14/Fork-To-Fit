@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using ForkToFit.Models;
+using ForkToFit.Utils;
 
 namespace ForkToFit.Repositories 
 {
@@ -49,8 +50,8 @@ namespace ForkToFit.Repositories
                             Name = reader.GetString(reader.GetOrdinal("mpName")),
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                             MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
-                            CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker")),
-                            MealPlanType = new MealPlanType()
+                            CalorieTracker = DbUtils.GetNullableInt(reader, "CalorieTracker"),
+                            MealPlanType = new MealPlanType
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("mptId")),
                                 Name = reader.GetString(reader.GetOrdinal("mptName"))
@@ -235,10 +236,10 @@ namespace ForkToFit.Repositories
                     cmd.CommandText = @"
                         Update MealPlan
                         SET
-                            [Name] = @name,
+                            Name = @name,
                          MealPlanTypeId = @mealPlanTypeId,
                          CalorieTracker = @calorieTracker
-                        WHERE Id = @id";
+                        WHERE MealPlan.Id = @id";
 
                     cmd.Parameters.AddWithValue("@name", mealPlan.Name);
                     cmd.Parameters.AddWithValue("@id", mealPlan.Id);

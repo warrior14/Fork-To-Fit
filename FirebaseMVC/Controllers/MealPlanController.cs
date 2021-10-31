@@ -121,34 +121,53 @@ namespace ForkToFit.Controllers
 
         // GET: MealPlanController/Edit/5
         public ActionResult Edit(int id)
-    {
+        {
+            var evm = new MealPlanFormViewModel();
+            evm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
+            evm.MealPlan = _mealPlanRepo.GetMealPlanById(id);
 
-            MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
-            if (mealPlan == null)
-            {
-                return NotFound();
-            }
-        return View(mealPlan);
-    }
+            return View(evm);
+
+
+            //    MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
+            //    if (mealPlan == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //return View(mealPlan);
+        }
 
     // POST: MealPlanController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, MealPlan mealPlan)
+    public ActionResult Edit(int id, MealPlanFormViewModel evm)
     {
         try
         {
-            _mealPlanRepo.EditMealPlan(mealPlan);
+            //evm.MealPlan = _mealPlanRepo.GetMealPlanById(id);
+            _mealPlanRepo.EditMealPlan(evm.MealPlan);
             return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View(mealPlan);
+            return View(evm);
         }
     }
+        //public ActionResult Edit(int id, MealPlan mealPlan)
+        //{
+        //    try
+        //    {
+        //        _mealPlanRepo.EditMealPlan(mealPlan);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View(mealPlan);
+        //    }
+        //}
 
-    // GET: MealPlanController/Delete/5
-    public ActionResult Delete(int id)
+        // GET: MealPlanController/Delete/5
+        public ActionResult Delete(int id)
     {
 
         MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);

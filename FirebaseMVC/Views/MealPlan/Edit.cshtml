@@ -1,4 +1,5 @@
-﻿@model ForkToFit.Models.MealPlan
+﻿@model ForkToFit.Models.ViewModels.MealPlanFormViewModel
+@*@model ForkToFit.Models.MealPlan*@
 
 @{
     ViewData["Title"] = "Edit Your Meal Plan";
@@ -6,33 +7,34 @@
 
 <h1>Edit Meal Plan</h1>
 
-<h4>MealPlan</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <input asp-for="MealPlan.Id" type="hidden" />
             </div>
             <div class="form-group">
-                <label asp-for="MealPlanType.Name" class="control-label">Meal Plan Type</label>
-                <select asp-for="MealPlanType.Name" class="form-control">
+                <label asp-for="MealPlan.Name" class="control-label"></label>
+                <input asp-for="MealPlan.Name" class="form-control" />
+                <span asp-validation-for="MealPlan.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MealPlan.MealPlanType" class="control-label">Meal Plan Type</label>
+                <select asp-for="MealPlan.MealPlanTypeId" class="form-control">
                     <option value="">Select Meal Plan Type</option>
                     @foreach (MealPlanType mealPlanType in Model.MealPlanTypes)
                     {
                         <option value="@mealPlanType.Id">@mealPlanType.Name</option>
                     }
                 </select>
-                <span asp-validation-for="MealPlanTypeId" class="text-danger"></span>
+                <span asp-validation-for="MealPlan.MealPlanTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CalorieTracker" class="control-label"></label>
-                <input asp-for="CalorieTracker" class="form-control" />
-                <span asp-validation-for="CalorieTracker" class="text-danger"></span>
+                <label asp-for="MealPlan.CalorieTracker" class="control-label"></label>
+                <input asp-for="MealPlan.CalorieTracker" class="form-control" />
+                <span asp-validation-for="MealPlan.CalorieTracker" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
