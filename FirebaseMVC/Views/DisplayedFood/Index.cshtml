@@ -52,10 +52,7 @@
             <form asp-controller="DisplayedFood" asp-action="AddFoodToMealPlan">
                 <tr>
                     <div class="form-group">
-                        <td>
-                            <input asp-for="FoodSelected.DisplayedFoodId" value="@item.Id"  class="control-label" hidden/>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
+                        <input asp-for="FoodSelected.DisplayedFoodId" value="@item.Id" class="control-label" hidden />
                     </div>
 
                     <td>

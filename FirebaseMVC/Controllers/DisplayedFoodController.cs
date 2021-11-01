@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ForkToFit.Models;
+﻿using ForkToFit.Models.ViewModels;
 using ForkToFit.Repositories;
-using ForkToFit.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.Data.SqlClient;
 
 namespace ForkToFit.Controllers
 {
@@ -48,18 +42,15 @@ namespace ForkToFit.Controllers
         public ActionResult Index()
         {
             var currentUserId = GetLoggedUserProfileId();
+            // Making a new instance of the AddFoodToMealPlanViewModel with all its empty variables
             var dfvm = new AddFoodToMealPlanViewModel();
+            // Assigning values to all of the empty variables from the repos, they will no longer be empty but instead have arrays.
             dfvm.MealPlans = _mealPlanRepo.GetMealPlansByUserId(currentUserId);
             dfvm.DisplayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
             dfvm.DayCategories = _dayCategoryRepo.GetAllDayCategories();
-            dfvm.MealTimes = _mealTimeRepo.GetAllMealTimes();
-
-            //dfvm.FoodSelected = null;
-            
+            dfvm.MealTimes = _mealTimeRepo.GetAllMealTimes();    
+            // dfvm's variables such as MealPlans now contain arrays of things that we are passing to the view.
             return View(dfvm);
-            //List<DisplayedFood> displayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
-
-            //return View(displayedFoods);
         }
 
         private int GetLoggedUserProfileId()
