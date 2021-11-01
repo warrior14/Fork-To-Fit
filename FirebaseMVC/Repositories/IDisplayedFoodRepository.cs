@@ -12,5 +12,7 @@ namespace ForkToFit.Repositories
     {
         List<DisplayedFood> GetAllDisplayedFoods();
         DisplayedFood GetDisplayedFoodById(int id);
+
+        void AddFoodSelectedToMealPlan(FoodSelected foodSelected);
     }
 }

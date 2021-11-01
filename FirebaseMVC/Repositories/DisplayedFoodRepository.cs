@@ -154,6 +154,30 @@ namespace ForkToFit.Repositories
             }
         }
 
+        public void AddFoodSelectedToMealPlan(FoodSelected foodSelected)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO FoodSelected (MealPlanId, DayCategoryId, MealTimeId, DisplayedFoodId)
+                    OUTPUT INSERTED.ID
+                    VALUES (@mealPlanId, @dayCategoryId, @mealTimeId, @displayedFoodId);
+                    ";
+
+                    cmd.Parameters.AddWithValue("@mealPlanId", foodSelected.MealPlanId);
+                    cmd.Parameters.AddWithValue("@dayCategoryId", foodSelected.DayCategoryId);
+                    cmd.Parameters.AddWithValue("@mealTimeId", foodSelected.MealTimeId);
+                    cmd.Parameters.AddWithValue("@displayedFoodId", foodSelected.DisplayedFoodId);
+
+                    foodSelected.Id = (int)cmd.ExecuteScalar();
+
+                }
+            }
+        } 
+
 
     }
 }

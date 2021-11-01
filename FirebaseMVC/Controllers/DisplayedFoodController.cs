@@ -8,23 +8,28 @@ using ForkToFit.Models;
 using ForkToFit.Repositories;
 using ForkToFit.Models.ViewModels;
 using System.Security.Claims;
+using Microsoft.Data.SqlClient;
 
 namespace ForkToFit.Controllers
 {
     public class DisplayedFoodController : Controller
 {
-
         private readonly IDisplayedFoodRepository _displayedFoodRepo;
         private readonly IMealPlanRepository _mealPlanRepo;
+        private readonly IMealTimeRepository _mealTimeRepo;
+        private readonly IDayCategoryRepository _dayCategoryRepo;
+
 
         // ASP.NET will give us an instance of our DisplayedFood Repository. This is called "Dependency Injection" 
 
 
         // this is a constructor that takes in a parameter of IDisplayedFoodRepository and the displayedFoodRepository is the variable that holds it.
-        public DisplayedFoodController(IDisplayedFoodRepository displayedFoodRepository, IMealPlanRepository mealPlanRepository)
+        public DisplayedFoodController(IDisplayedFoodRepository displayedFoodRepository, IMealPlanRepository mealPlanRepository, IMealTimeRepository mealTimeRepository, IDayCategoryRepository dayCategoryRepository)
         {
             _displayedFoodRepo = displayedFoodRepository;
             _mealPlanRepo = mealPlanRepository;
+            _mealTimeRepo = mealTimeRepository;
+            _dayCategoryRepo = dayCategoryRepository;
         }
 
 
@@ -46,6 +51,9 @@ namespace ForkToFit.Controllers
             var dfvm = new AddFoodToMealPlanViewModel();
             dfvm.MealPlans = _mealPlanRepo.GetMealPlansByUserId(currentUserId);
             dfvm.DisplayedFoods = _displayedFoodRepo.GetAllDisplayedFoods();
+            dfvm.DayCategories = _dayCategoryRepo.GetAllDayCategories();
+            dfvm.MealTimes = _mealTimeRepo.GetAllMealTimes();
+
             //dfvm.FoodSelected = null;
             
             return View(dfvm);
@@ -130,12 +138,17 @@ namespace ForkToFit.Controllers
     }
 
 
-    public ActionResult Taco(AddFoodToMealPlanViewModel what)
+    public ActionResult AddFoodToMealPlan(AddFoodToMealPlanViewModel vm)
         {
-            AddFoodToMealPlanViewModel theHeck = what;
-            Console.WriteLine(what);
-            Console.WriteLine(theHeck);
-            return null;
+            try
+            {
+                _displayedFoodRepo.AddFoodSelectedToMealPlan(vm.FoodSelected);
+                return RedirectToAction(nameof(Index));
+            } catch
+            {
+                return View(vm);
+            }
+
         }
 }
 }
