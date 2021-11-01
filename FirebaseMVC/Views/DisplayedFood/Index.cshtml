@@ -49,7 +49,7 @@
 
         @foreach (var item in Model.DisplayedFoods)
         {
-            <form asp-controller="DisplayedFood" asp-action="Taco">
+            <form asp-controller="DisplayedFood" asp-action="AddFoodToMealPlan">
                 <tr>
                     <div class="form-group">
                         <td>
@@ -86,7 +86,21 @@
                                 <option value="@mealPlan.Id">@mealPlan.Name</option>
                             }
                         </select>
-                        <button type="submit" value="Taco">Add To Meal Plan</button>
+                        <select asp-for="FoodSelected.DayCategoryId">
+                            <option value="">Select Day Time</option>
+                            @foreach (DayCategory dayTime in Model.DayCategories)
+                            {
+                                <option value="@dayTime.Id">@dayTime.Name</option>
+                            }
+                        </select>
+                        <select asp-for="FoodSelected.MealTimeId">
+                            <option value="">Select Meal Time</option>
+                            @foreach (MealTime mealTime in Model.MealTimes)
+                            {
+                                <option value="@mealTime.Id">@mealTime.Name</option>
+                            }
+                        </select>
+                        <button type="submit" value="AddFoodToMealPlan">Add To Meal Plan</button>
 
                         @*@Html.ActionLink("AddFoodToMealPlan", new { id=mealPlan.Id })*@
                     </td>
