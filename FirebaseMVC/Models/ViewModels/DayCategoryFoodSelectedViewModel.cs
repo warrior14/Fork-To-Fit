@@ -10,5 +10,9 @@ namespace ForkToFit.Models.ViewModels
         public List<FoodSelected> MealPlanFoods { get;  set; }
 
         public List<DayCategory> ListOfDays { get; set; }
+
+        public int MealPlanId { get; set; }
+        
+        public int DaySelectedId { get; set; }
     }
 }

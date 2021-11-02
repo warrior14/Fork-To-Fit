@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace ForkToFit.Controllers
 {
     public class MealPlanController : Controller
-{
+    {
 
 
         private readonly IMealPlanTypeRepository _mealPlanTypeRepo;
@@ -26,7 +26,7 @@ namespace ForkToFit.Controllers
 
         // this is a constructor that takes in a parameter of IDisplayedFoodRepository and the displayedFoodRepository is the variable that holds it.
         public MealPlanController(
-            IMealPlanRepository mealPlanRepository, 
+            IMealPlanRepository mealPlanRepository,
             IMealPlanTypeRepository mealPlanTypeRepository,
             IUserProfileRepository userProfileRepository,
             IDayCategoryRepository dayCategoryRepository)
@@ -51,20 +51,21 @@ namespace ForkToFit.Controllers
 
 
 
-    // GET: MealPlanController/Details/5
-    public ActionResult Details(int id)
-    {
+        // GET: MealPlanController/Details/5
+        public ActionResult Details(int mealPlanId)
+        {
             var vm = new DayCategoryFoodSelectedViewModel();
-            vm.MealPlanFoods = _mealPlanRepo.GetAllMealPlanFoodsByMealPlanId(id);
+
             vm.ListOfDays = _dayCategoryRepo.GetAllDayCategories();
+            vm.MealPlanId = mealPlanId;
 
             return View(vm);
-    }
+        }
 
 
-    // GET: MealPlanController/Create
-    public ActionResult Create()
-    {
+        // GET: MealPlanController/Create
+        public ActionResult Create()
+        {
 
             // storing the list of meal plan types returned from calling the getallmealplantype method from meal plan type repo
             //List<MealPlanType> mealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
@@ -79,16 +80,16 @@ namespace ForkToFit.Controllers
             vm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
 
 
-        return View(vm);
-    }
+            return View(vm);
+        }
 
-    // POST: MealPlanController/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Create(MealPlanFormViewModel vm)
-    {
-        try
+        // POST: MealPlanController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(MealPlanFormViewModel vm)
         {
+            try
+            {
                 // use this method if you need to create,edit etc... and you need to refer something from the userprofile table
                 string userProfileId = GetCurrentUserProfileId();
                 //vm.MealPlan.UserProfileId = GetCurrentUserProfileId();
@@ -96,13 +97,13 @@ namespace ForkToFit.Controllers
                 vm.MealPlan.UserProfileId = currentUser.Id;
                 _mealPlanRepo.AddMealPlan(vm.MealPlan);
                 return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
+            }
+            catch
+            {
                 vm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
                 return View(vm);
+            }
         }
-    }
 
 
 
@@ -136,48 +137,48 @@ namespace ForkToFit.Controllers
 
         }
 
-    // POST: MealPlanController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, MealPlanFormViewModel evm)
-    {
-        try
+        // POST: MealPlanController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, MealPlanFormViewModel evm)
         {
-            //evm.MealPlan = _mealPlanRepo.GetMealPlanById(id);
-            _mealPlanRepo.EditMealPlan(evm.MealPlan);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                //evm.MealPlan = _mealPlanRepo.GetMealPlanById(id);
+                _mealPlanRepo.EditMealPlan(evm.MealPlan);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(evm);
+            }
         }
-        catch
-        {
-            return View(evm);
-        }
-    }
 
 
         // GET: MealPlanController/Delete/5
         public ActionResult Delete(int id)
-    {
-
-        MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
-        return View(mealPlan);
-    }
-
-    // POST: MealPlanController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, MealPlan mealPlan)
-    {
-        try
         {
-                //mealPlan = _mealPlanRepo.GetMealPlanById(id);
-                _mealPlanRepo.DeleteMealPlan(id);
-            return RedirectToAction(nameof(Index));
-        }
-        catch
-        {
+
+            MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(id);
             return View(mealPlan);
         }
-    }
+
+        // POST: MealPlanController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, MealPlan mealPlan)
+        {
+            try
+            {
+                //mealPlan = _mealPlanRepo.GetMealPlanById(id);
+                _mealPlanRepo.DeleteMealPlan(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(mealPlan);
+            }
+        }
 
 
 
@@ -192,6 +193,13 @@ namespace ForkToFit.Controllers
             string userProfileId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return userProfileId;
         }
+
+        public ActionResult DisplayFoods(DayCategoryFoodSelectedViewModel vm)
+        {
+            var mealPlanFoods = _mealPlanRepo.GetFoodsByDayCategoryId(vm.DaySelectedId, vm.MealPlanId);
+            return View(mealPlanFoods);
+        }
+
 
 
 

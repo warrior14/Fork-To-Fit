@@ -25,5 +25,7 @@ namespace ForkToFit.Repositories
 
         //void PatchMealPlan(MealPlan mealPlan);
 
+        List<FoodSelected> GetFoodsByDayCategoryId(int id, int mealPlanId);
+
     }
 }
