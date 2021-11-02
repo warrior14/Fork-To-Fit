@@ -326,8 +326,7 @@ namespace ForkToFit.Repositories
                     LEFT JOIN MealTime mt
                     ON fs.MealTimeId = mt.Id
                     WHERE fs.MealPlanId = @mealPlanId
-                    AND fs.DayCategoryId = @dayCategoryId
-                        ";
+                    AND fs.DayCategoryId = @dayCategoryId";
 
 
                     cmd.Parameters.AddWithValue("@dayCategoryId", dayId);
