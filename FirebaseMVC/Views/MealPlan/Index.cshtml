@@ -29,24 +29,23 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var mealPlan in Model) {
         <tr>
-           
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => mealPlan.Name)
             </td>
            
             <td>
-                @Html.DisplayFor(modelItem => item.MealPlanType.Name)
+                @Html.DisplayFor(modelItem => mealPlan.MealPlanType.Name)
             </td>
           
             <td>
-               @Html.DisplayFor(modelItem => item.CalorieTracker)
+               @Html.DisplayFor(modelItem => mealPlan.CalorieTracker)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { item.Id }) |
-                @Html.ActionLink("Details", "Details", new { item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { item.Id })
+                @Html.ActionLink("Edit", "Edit", new { mealPlan.Id }) |
+                @Html.ActionLink("Details", "Details", new { mealPlan.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { mealPlan.Id })
             </td>
         </tr>
 }

@@ -18,5 +18,7 @@ namespace ForkToFit.Models
 
         public int DisplayedFoodId { get; set; }
 
+        public MealTime MealTime { get; set; }
+
     }
 }

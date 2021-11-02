@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ForkToFit.Models.FoodSelected>
+
+@{
+    ViewData["Title"] = "DisplayFoods";
+}
+
+<h1>DisplayFoods</h1>
+
+<div>
+    <h4>FoodSelected</h4>
+    <hr />
+    <dl class="row">
+        @foreach (var food in Model)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => food.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.ServingSize)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => food.ServingSize)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.Calories)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => food.Calories)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => food.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.MacronutrientCategoryName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => food.MacronutrientCategoryName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.MealTime.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => food.MealTime.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => food.ImageUrl)
+            </dt>
+            <dd class="col-sm-10">
+                <img class="allImages" src="@food.ImageUrl" alt="Food Selected" />
+            </dd>
+        }
+
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Details">Back to List</a>
+</div>
