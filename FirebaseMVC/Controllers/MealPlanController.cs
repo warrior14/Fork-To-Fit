@@ -19,6 +19,7 @@ namespace ForkToFit.Controllers
         private readonly IMealPlanTypeRepository _mealPlanTypeRepo;
         private readonly IMealPlanRepository _mealPlanRepo;
         private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IDayCategoryRepository _dayCategoryRepo;
 
         // ASP.NET will give us an instance of our DisplayedFood Repository. This is called "Dependency Injection" 
 
@@ -27,11 +28,13 @@ namespace ForkToFit.Controllers
         public MealPlanController(
             IMealPlanRepository mealPlanRepository, 
             IMealPlanTypeRepository mealPlanTypeRepository,
-            IUserProfileRepository userProfileRepository)
+            IUserProfileRepository userProfileRepository,
+            IDayCategoryRepository dayCategoryRepository)
         {
             _mealPlanRepo = mealPlanRepository;
             _mealPlanTypeRepo = mealPlanTypeRepository;
             _userProfileRepo = userProfileRepository;
+            _dayCategoryRepo = dayCategoryRepository;
         }
 
 
@@ -51,9 +54,11 @@ namespace ForkToFit.Controllers
     // GET: MealPlanController/Details/5
     public ActionResult Details(int id)
     {
+            var vm = new DayCategoryFoodSelectedViewModel();
+            vm.MealPlanFoods = _mealPlanRepo.GetAllMealPlanFoodsByMealPlanId(id);
+            vm.ListOfDays = _dayCategoryRepo.GetAllDayCategories();
 
-        List<FoodSelected> foodSelecteds = _mealPlanRepo.GetAllMealPlanFoodsByMealPlanId(id);
-        return View(foodSelecteds);
+            return View(vm);
     }
 
 

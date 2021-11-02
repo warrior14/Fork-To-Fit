@@ -37,7 +37,7 @@
             </th>
             <th>
                 @*@Html.DisplayNameFor(model => model.ImageUrl)*@
-                Image
+                
             </th>
             <th>
                 Meal Plan Names
@@ -71,7 +71,7 @@
                         @Html.DisplayFor(modelItem => item.MacroCategory.MacronutrientCategoryName)
                     </td>
                     <td>
-                        <img src="@item.ImageUrl" alt="Food" />
+                        <img class="allImages" src="@item.ImageUrl" alt="Food" />
                     </td>
                     <td>
                         @*<label asp-for="DisplayedFoods.MealPlan" class="control-label">Meal Plan</label>*@

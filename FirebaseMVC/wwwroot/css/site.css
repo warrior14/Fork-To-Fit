@@ -8,10 +8,16 @@ a.navbar-brand {
     font-family: 'Kalam', cursive;
 }
 
+.home {
+    height: 400px;
+    width: 900px;
+}
 
 
-
-
+.allImages {
+    height: 150px;
+    width: 150px;
+}
 
 * {
     font-family: 'Kalam', cursive;
@@ -49,6 +55,12 @@ html {
         font-family: 'Kalam', cursive;
     }
 }
+
+.navHome {
+    color: red;
+}
+
+
 
 .border-top {
   border-top: 1px solid #e5e5e5;
@@ -91,17 +103,13 @@ body {
 
 
 
-/*.parallax {*/
-    /*background image*/
-    /*background-image: url('https://images.creativemarket.com/0.1.0/ps/5912337/1820/1213/m1/fpnw/wm1/tq3dpzrfpjdhuzk9yqb2zgsq446ssnplh9b8fzsbeo1oemh6ec5kkpp6gamxff7e-.jpg?1550561650&s=5c8e2e797d2405585e6676d70d42229f');*/
-    /* full height*/
-    /*height: 100%;*/
-    /*center and scale image*/
-    /*background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}*/
+
+
+
+
+
+
+}
 
 
 
