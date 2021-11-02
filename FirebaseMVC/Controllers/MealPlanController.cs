@@ -52,12 +52,12 @@ namespace ForkToFit.Controllers
 
 
         // GET: MealPlanController/Details/5
-        public ActionResult Details(int mealPlanId)
+        public ActionResult Details(int id)
         {
             var vm = new DayCategoryFoodSelectedViewModel();
-
+            Console.WriteLine(id);
             vm.ListOfDays = _dayCategoryRepo.GetAllDayCategories();
-            vm.MealPlanId = mealPlanId;
+            vm.MealPlanId = id;
 
             return View(vm);
         }
