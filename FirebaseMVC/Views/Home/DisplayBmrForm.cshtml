@@ -1,0 +1,39 @@
+﻿@model ForkToFit.Models.UserProfile
+
+@{
+    ViewData["Title"] = "DisplayBmrForm";
+}
+
+<h1>Input Your Information To Calculate Your Basal Metabolic Rate!</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CalculateBmr">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" value="@Model.Id" hidden/>
+            <input asp-for="Weight" class="form-control" />
+            <input asp-for="Height" class="form-control" />
+            <input asp-for="Age" class="form-control" />
+          
+            <select asp-for="Sex" class="form-control">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        
+            <div class="form-group">
+                <input type="submit" value="Calculate" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

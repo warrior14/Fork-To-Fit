@@ -53,7 +53,7 @@ namespace ForkToFit.Auth
 
             await LoginToApp(userProfile);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("DisplayBmrForm", "Home");
         }
 
         public IActionResult Register()
