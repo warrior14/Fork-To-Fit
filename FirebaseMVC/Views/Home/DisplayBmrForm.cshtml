@@ -13,8 +13,11 @@
         <form asp-action="CalculateBmr">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" value="@Model.Id" hidden/>
+            Weight
             <input asp-for="Weight" class="form-control" />
+            Height
             <input asp-for="Height" class="form-control" />
+            Age
             <input asp-for="Age" class="form-control" />
           
             <select asp-for="Sex" class="form-control">

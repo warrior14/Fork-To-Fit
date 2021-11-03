@@ -37,6 +37,7 @@ namespace ForkToFit.Auth
                 return View(credentials);
             }
 
+            // Authenticate user, if user's credentials are valid.
             var fbUser = await _firebaseAuthService.Login(credentials);
             if (fbUser == null)
             {
@@ -44,6 +45,7 @@ namespace ForkToFit.Auth
                 return View(credentials);
             }
 
+            // if user credentials are valid it goes here, checks if the user is in the database.
             var userProfile = _userProfileRepository.GetByFirebaseUserId(fbUser.FirebaseUserId);
             if (userProfile == null)
             {
@@ -51,9 +53,16 @@ namespace ForkToFit.Auth
                 return View(credentials);
             }
 
-            await LoginToApp(userProfile);
+            if (userProfile.BmrInfo == 0)
+            {
+                await LoginToApp(userProfile);
+                return RedirectToAction("DisplayBmrForm", "Home");
+            } else
+            {
+                await LoginToApp(userProfile);
+                return RedirectToAction("Index", "Home");
+            }
 
-            return RedirectToAction("DisplayBmrForm", "Home");
         }
 
         public IActionResult Register()
@@ -89,7 +98,7 @@ namespace ForkToFit.Auth
 
             await LoginToApp(newUserProfile);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("DisplayBmrForm", "Home");
         }
 
         // user gets logged out
