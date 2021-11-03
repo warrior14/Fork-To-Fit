@@ -162,5 +162,38 @@ namespace ForkToFit.Repositories
                 }
             }
         }
+
+
+
+
+
+
+        public void SetUserProfileBmrInfo(double calculatedBmr, int userProfileId)
+        {
+            // sql
+                using (SqlConnection conn = Connection)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"
+                            UPDATE UserProfile
+                            SET BmrInfo = @bmrInfo
+                            WHERE Id = @userProfileId;
+                        ";
+
+                        cmd.Parameters.AddWithValue("@bmrInfo", calculatedBmr);
+                        cmd.Parameters.AddWithValue("@userProfileId", userProfileId);
+
+
+                    cmd.ExecuteNonQuery();
+                
+                }
+            }
+        }
+
+
+
+
     }
 }

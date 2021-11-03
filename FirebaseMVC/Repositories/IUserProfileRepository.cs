@@ -17,5 +17,8 @@ namespace ForkToFit.Repositories
         // logged in user to userProfileId when creating a meal plan for example, etc):
         UserProfile GetByUserProfileId(string userProfileId);
         UserProfile GetById(int id);
+
+
+        public void SetUserProfileBmrInfo(double calculatedBmr, int userProfileId);
     }
 }
