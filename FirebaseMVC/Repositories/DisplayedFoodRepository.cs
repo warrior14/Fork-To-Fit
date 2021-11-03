@@ -179,5 +179,29 @@ namespace ForkToFit.Repositories
         } 
 
 
+        public void UpdateCurrentCaloriesInMealPlan(MealPlan mealPlan)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        Update MealPlan
+                        SET CurrentCalories = @currentCalories
+                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", mealPlan.Id);
+                    cmd.Parameters.AddWithValue("@currentCalories", mealPlan.CurrentCalories);
+  
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
     }
 }
+
+
+
