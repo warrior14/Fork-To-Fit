@@ -133,6 +133,7 @@ namespace ForkToFit.Controllers
         {
             try
             {
+
                 _displayedFoodRepo.AddFoodSelectedToMealPlan(vm.FoodSelected);
                 return RedirectToAction(nameof(Index));
             } catch
@@ -141,5 +142,6 @@ namespace ForkToFit.Controllers
             }
 
         }
+    }
 }
-}
+

@@ -12,6 +12,8 @@ namespace ForkToFit.Models
 
         public string Name { get; set; }
 
+        public int CurrentCalories { get; set; }
+
         public int UserProfileId { get; set; }
 
         [DisplayName("Meal Plan Type")]
