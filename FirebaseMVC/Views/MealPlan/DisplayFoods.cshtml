@@ -7,7 +7,7 @@
 <h1>DisplayFoods</h1>
 
 <div>
-    <h4>FoodSelected</h4>
+    <h4>Food Selected</h4>
     <hr />
     <dl class="row">
         @foreach (var food in Model)
@@ -37,19 +37,21 @@
                 @Html.DisplayFor(model => food.Description)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => food.MacronutrientCategoryName)
+                @*@Html.DisplayNameFor(model => food.MacronutrientCategoryName)*@
+                Macronutrient Name
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => food.MacronutrientCategoryName)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => food.MealTime.Name)
+                @*@Html.DisplayNameFor(model => food.MealTime.Name)*@
+                Meal Time
             </dt>
             <dd>
                 @Html.DisplayFor(model => food.MealTime.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => food.ImageUrl)
+                @*@Html.DisplayNameFor(model => food.ImageUrl)*@
             </dt>
             <dd class="col-sm-10">
                 <img class="allImages" src="@food.ImageUrl" alt="Food Selected" />
