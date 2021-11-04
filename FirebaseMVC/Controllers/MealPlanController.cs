@@ -98,8 +98,10 @@ namespace ForkToFit.Controllers
                 _mealPlanRepo.AddMealPlan(vm.MealPlan);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
+                Console.WriteLine(e);
                 vm.MealPlanTypes = _mealPlanTypeRepo.GetAllMealPlanTypes();
                 return View(vm);
             }
@@ -201,7 +203,25 @@ namespace ForkToFit.Controllers
         }
 
 
+        public ActionResult RemoveFoodFromMealPlan(int foodId, int mealTimeId, int mealPlanId, double foodCalories)
+        {
 
+            _mealPlanRepo.DeleteFoodFromMealPlan(foodId);
+
+            MealPlan currentMealPlan = _mealPlanRepo.GetMealPlanById(mealPlanId);
+            double updatedCalories = _mealPlanRepo.SubtractCalories(foodCalories, currentMealPlan.CurrentCalories);
+            _mealPlanRepo.UpdateCurrentCaloriesInMealPlan(updatedCalories, mealPlanId);
+
+
+            // This is the stuff Im sending back to the view so it can load the page with the current foods.
+            DayCategoryFoodSelectedViewModel vm = new DayCategoryFoodSelectedViewModel();
+            vm.DaySelectedId = mealTimeId;
+            vm.MealPlanId = mealPlanId;
+            
+
+            // Im telling it to display the DisplayFoods view and I am passing the vm modal as parameters.
+            return RedirectToAction(nameof(DisplayFoods), vm);
+        }
 
     }
 }
