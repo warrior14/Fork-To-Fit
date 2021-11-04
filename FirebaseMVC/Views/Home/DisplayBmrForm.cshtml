@@ -5,6 +5,11 @@
 }
 
 <h1>Input Your Information To Calculate Your Basal Metabolic Rate!</h1>
+<p>
+    What does the BMR tell you?
+    Your basal metabolic rate helps you figure out how many calories your body needs to function and how many calories
+    it burns each day at rest.
+</p>
 
 
 <hr />
@@ -13,19 +18,19 @@
         <form asp-action="CalculateBmr">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" value="@Model.Id" hidden/>
-            Weight
+            Weight in pounds
             <input asp-for="Weight" class="form-control" />
-            Height
+            Height in inches
             <input asp-for="Height" class="form-control" />
             Age
             <input asp-for="Age" class="form-control" />
-          
+          <br />
             <select asp-for="Sex" class="form-control">
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
             </select>
-        
+        <br />
             <div class="form-group">
                 <input type="submit" value="Calculate" class="btn btn-primary" />
             </div>
