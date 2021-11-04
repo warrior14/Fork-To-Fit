@@ -30,7 +30,7 @@ namespace ForkToFit.Repositories
                 {
                     // line below must match all the columns in your database
                     cmd.CommandText = @"
-                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
+                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CurrentCalories, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
                         FROM MealPlan mp
                         LEFT JOIN MealPlanType mpt
                         ON mp.MealPlanTypeId = mpt.Id
@@ -50,7 +50,9 @@ namespace ForkToFit.Repositories
                             Name = reader.GetString(reader.GetOrdinal("mpName")),
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                             MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
+                            CurrentCalories = reader.GetInt32(reader.GetOrdinal("CurrentCalories")),
                             CalorieTracker = DbUtils.GetNullableInt(reader, "CalorieTracker"),
+
                             MealPlanType = new MealPlanType
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("mptId")),

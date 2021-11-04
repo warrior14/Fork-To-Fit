@@ -52,12 +52,27 @@ namespace ForkToFit.Controllers
 
 
         // GET: MealPlanController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int mealPlanId, double mealPlanCurrentCalories)
         {
             var vm = new DayCategoryFoodSelectedViewModel();
-            Console.WriteLine(id);
             vm.ListOfDays = _dayCategoryRepo.GetAllDayCategories();
-            vm.MealPlanId = id;
+            vm.MealPlanId = mealPlanId;
+
+            // Im getting the meal plan again to retrieve the newest calories, this is specifically for when the user
+            // clicks on Back to List from DisplayFoods view.
+            MealPlan mealPlan = _mealPlanRepo.GetMealPlanById(mealPlanId);
+            // This condition will only trigger if we are clicking on Back to List link in DisplayFoods view
+            // because that view isnt returning us current calories or a meal plan so theres no way for me to
+            // re-populate the mealPlanCurrentCalories that way.
+            if (mealPlanCurrentCalories == 0)
+            {
+                vm.MealPlanCurrentCalories = mealPlan.CurrentCalories;
+                Console.WriteLine(mealPlan.CurrentCalories);
+            } 
+            else
+            {
+                vm.MealPlanCurrentCalories = mealPlanCurrentCalories;
+            }
 
             return View(vm);
         }
@@ -199,7 +214,8 @@ namespace ForkToFit.Controllers
         public ActionResult DisplayFoods(DayCategoryFoodSelectedViewModel vm)
         {
             var mealPlanFoods = _mealPlanRepo.GetFoodsByDayCategoryId(vm.DaySelectedId, vm.MealPlanId);
-            return View(mealPlanFoods);
+            vm.MealPlanFoods = mealPlanFoods;
+            return View(vm);
         }
 
 

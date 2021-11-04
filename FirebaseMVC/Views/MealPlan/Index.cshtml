@@ -44,7 +44,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { mealPlan.Id }) |
-                @Html.ActionLink("Details", "Details", new { mealPlan.Id }) |
+                @Html.ActionLink("Details", "Details", new { mealPlanId = mealPlan.Id, mealPlanCurrentCalories = mealPlan.CurrentCalories }) |
                 @Html.ActionLink("Delete", "Delete", new { mealPlan.Id })
             </td>
         </tr>

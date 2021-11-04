@@ -7,13 +7,16 @@
 <h1>Details</h1>
 
 
+<h2>Total Calories For The Week</h2>
+<p>@Model.MealPlanCurrentCalories</p>
 
 <div>
-    
+
     <hr />
     <dl class="row">
         <form asp-controller="MealPlan" asp-action="DisplayFoods">
             <input asp-for="MealPlanId" value="@Model.MealPlanId" hidden />
+            <input asp-for="MealPlanCurrentCalories" value="@Model.MealPlanCurrentCalories" hidden />
             <select asp-for="DaySelectedId">
                 @foreach (var day in Model.ListOfDays)
                 {
