@@ -136,15 +136,16 @@ namespace ForkToFit.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    INSERT INTO MealPlan ([Name], UserProfileId, MealPlanTypeId, CalorieTracker)
+                    INSERT INTO MealPlan ([Name], UserProfileId, MealPlanTypeId, CurrentCalories, CalorieTracker)
                     OUTPUT INSERTED.ID
-                    VALUES (@name, @userProfileId, @mealPlanTypeId, @calorieTracker);
+                    VALUES (@name, @userProfileId, @mealPlanTypeId, @currentCalories, @calorieTracker)
                     ";
 
                     cmd.Parameters.AddWithValue("@name", mealPlan.Name);
                     cmd.Parameters.AddWithValue("@userProfileId", mealPlan.UserProfileId);
                     cmd.Parameters.AddWithValue("@mealPlanTypeId", mealPlan.MealPlanTypeId);
                     cmd.Parameters.AddWithValue("@calorieTracker", mealPlan.CalorieTracker);
+                    cmd.Parameters.AddWithValue("@currentCalories", 0);
 
                     mealPlan.Id = (int)cmd.ExecuteScalar();
 
@@ -176,6 +177,29 @@ namespace ForkToFit.Repositories
         }
 
 
+        // deleting a food from a meal plan
+        public void DeleteFoodFromMealPlan(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM FoodSelected
+                                        WHERE Id = @Id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+
+
+
 
         public MealPlan GetMealPlanById(int id)
         {
@@ -185,7 +209,7 @@ namespace ForkToFit.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
+                        SELECT mp.Id [mpId], mp.Name [mpName], mp.UserProfileId, mp.MealPlanTypeId, mp.CurrentCalories, mp.CalorieTracker, mpt.Id [mptId], mpt.Name [mptName]
                         FROM MealPlan mp
                         LEFT JOIN MealPlanType mpt
                         ON mpt.Id = mp.MealPlanTypeId
@@ -207,6 +231,7 @@ namespace ForkToFit.Repositories
                                     Name = reader.GetString(reader.GetOrdinal("mpName")),
                                     UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
                                     MealPlanTypeId = reader.GetInt32(reader.GetOrdinal("MealPlanTypeId")),
+                                    CurrentCalories = reader.GetInt32(reader.GetOrdinal("CurrentCalories")),
                                     CalorieTracker = reader.GetInt32(reader.GetOrdinal("CalorieTracker")),
                                     MealPlanType = new MealPlanType()
                                     {
@@ -395,6 +420,42 @@ namespace ForkToFit.Repositories
         //        }
         //    }
         //}
+
+        public double CalculateCalories(double foodCalories, double currentMealPlanCalories)
+        {
+            double updatedCalories = currentMealPlanCalories + foodCalories;
+            return updatedCalories;
+        }
+
+        public double SubtractCalories(double foodCalories, double currentMealPlanCalories)
+        {
+            double updatedCalories = currentMealPlanCalories - foodCalories;
+            return updatedCalories;
+        }
+
+        public void UpdateCurrentCaloriesInMealPlan(double updatedFoodCalories, int mealPlanId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        Update MealPlan
+                        SET CurrentCalories = @currentCalories
+                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", mealPlanId);
+                    cmd.Parameters.AddWithValue("@currentCalories", updatedFoodCalories) ;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+
 
     }
 }

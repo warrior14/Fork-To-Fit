@@ -19,5 +19,7 @@ namespace ForkToFit.Models.ViewModels
 
         public List<MealTime> MealTimes { get; set; }
 
+        public double FoodCalories { get; set; }
+
     }
 }

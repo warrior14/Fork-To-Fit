@@ -1,4 +1,5 @@
 ﻿using ForkToFit.Models.ViewModels;
+using ForkToFit.Models;
 using ForkToFit.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -133,8 +134,11 @@ namespace ForkToFit.Controllers
         {
             try
             {
-
+                MealPlan currentMealPlan = _mealPlanRepo.GetMealPlanById(vm.FoodSelected.MealPlanId);
+                double updatedCalories = _mealPlanRepo.CalculateCalories(vm.FoodCalories, currentMealPlan.CurrentCalories);
                 _displayedFoodRepo.AddFoodSelectedToMealPlan(vm.FoodSelected);
+                _mealPlanRepo.UpdateCurrentCaloriesInMealPlan(updatedCalories, vm.FoodSelected.MealPlanId);
+                System.Console.WriteLine("hi");
                 return RedirectToAction(nameof(Index));
             } catch
             {
@@ -143,5 +147,7 @@ namespace ForkToFit.Controllers
 
         }
     }
+
+
 }
 

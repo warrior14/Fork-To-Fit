@@ -27,5 +27,12 @@ namespace ForkToFit.Repositories
 
         List<FoodSelected> GetFoodsByDayCategoryId(int id, int mealPlanId);
 
+        double CalculateCalories(double foodCalories, double currentMealPlanCalories);
+
+        void UpdateCurrentCaloriesInMealPlan(double foodCalories, int mealPlanId);
+
+        void DeleteFoodFromMealPlan(int id);
+
+        double SubtractCalories(double foodCalories, double currentMealPlanCalories);
     }
 }
