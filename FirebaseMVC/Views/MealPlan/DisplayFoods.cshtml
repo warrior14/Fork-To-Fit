@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ForkToFit.Models.FoodSelected>
+﻿@model ForkToFit.Models.ViewModels.DayCategoryFoodSelectedViewModel
+
 
 @{
     ViewData["Title"] = "DisplayFoods";
@@ -10,7 +11,7 @@
     <h4>Food Selected</h4>
     <hr />
     <dl class="row">
-        @foreach (var food in Model)
+        @foreach (var food in Model.MealPlanFoods)
         {
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => food.Name)
@@ -62,6 +63,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Details">Back to List</a>
+    @Html.ActionLink("Back to List", "Details", new { mealPlanId = Model.MealPlanId })
+    @*<a asp-action="Details">Back to List</a>*@
 </div>

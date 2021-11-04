@@ -14,5 +14,7 @@ namespace ForkToFit.Models.ViewModels
         public int MealPlanId { get; set; }
         
         public int DaySelectedId { get; set; }
+
+        public double MealPlanCurrentCalories { get; set; }
     }
 }
