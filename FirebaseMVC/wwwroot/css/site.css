@@ -8,6 +8,8 @@ a.navbar-brand {
     font-family: 'Kalam', cursive;
 }
 
+
+
 .home {
     height: 400px;
     width: 900px;
@@ -23,18 +25,39 @@ a.navbar-brand {
     font-family: 'Kalam', cursive;
 }
 
+.calculate 
+{
+    color: darkred;
+}
+
+
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
     font-family: 'Kalam', cursive;
 }
 
-.btn-primary {
+/*.btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
     font-family: 'Kalam', cursive;
+}*/
+
+.btn-primary {
+    color: #1d1e22;
+    background-color: #feda6a;
+    border-color: #feda6a;
+    font-weight: 600;
 }
+
+    .btn-primary:hover {
+        background-color: #d4d4dc;
+        border-color: #d4d4dc;
+        color: #1d1e22;
+    }
+
+
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #ff0000;

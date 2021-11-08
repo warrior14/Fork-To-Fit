@@ -396,33 +396,6 @@ namespace ForkToFit.Repositories
         }
 
 
-
-        // Patch Meal Plan
-        //void PatchMealPlan(MealPlan mealPlan)
-        //{
-        //    using (SqlConnection conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (SqlCommand cmd = conn.CreateCommand())
-        //        {
-        //            cmd.CommandText = @"
-        //                Update MealPlan
-        //                SET
-        //                     = @name,
-        //                 MealPlanTypeId = @mealPlanTypeId,
-        //                 CalorieTracker = @calorieTracker
-        //                WHERE MealPlan.Id = @id";
-
-        //            cmd.Parameters.AddWithValue("@name", mealPlan.Name);
-        //            cmd.Parameters.AddWithValue("@id", mealPlan.Id);
-        //            cmd.Parameters.AddWithValue("@mealPlanTypeId", mealPlan.MealPlanTypeId);
-        //            cmd.Parameters.AddWithValue("@calorieTracker", mealPlan.CalorieTracker);
-
-        //            cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
-
         public double CalculateCalories(double foodCalories, double currentMealPlanCalories)
         {
             double updatedCalories = currentMealPlanCalories + foodCalories;
