@@ -138,7 +138,6 @@ namespace ForkToFit.Controllers
                 double updatedCalories = _mealPlanRepo.CalculateCalories(vm.FoodCalories, currentMealPlan.CurrentCalories);
                 _displayedFoodRepo.AddFoodSelectedToMealPlan(vm.FoodSelected);
                 _mealPlanRepo.UpdateCurrentCaloriesInMealPlan(updatedCalories, vm.FoodSelected.MealPlanId);
-                System.Console.WriteLine("hi");
                 return RedirectToAction(nameof(Index));
             } catch
             {
